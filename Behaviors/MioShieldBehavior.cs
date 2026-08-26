@@ -9,11 +9,13 @@ public class MioShieldBehavior : MonoBehaviour
     public static MioShieldBehavior Instance { get; set; }
     
     public static bool IsShielded { get; set; }
+    public static bool IsSecondHitShielded { get; set; }
 
     private void Awake()
     {
         Instance = this;
         IsShielded = true;
+        IsSecondHitShielded = false;
     }
 
     public static IEnumerator RecoverShield(float delay)
@@ -22,5 +24,14 @@ public class MioShieldBehavior : MonoBehaviour
         yield return new WaitForSeconds(delay);
         Plugin.Log.LogInfo("Shield recovered");
         IsShielded = true;
+    }
+
+    public static IEnumerator BlockSecondHit(float period)
+    {
+        IsSecondHitShielded = true;
+        Plugin.Log.LogInfo("Shielded from consecutive hits!");
+        yield return new WaitForSeconds(period);
+        Plugin.Log.LogInfo("Stopped being shielded from consecutive hits...");
+        IsSecondHitShielded = false;
     }
 }
