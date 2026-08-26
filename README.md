@@ -28,7 +28,7 @@ Prerequisites: This mod requires `BepInEx`.
 ```
 - Directory schema:
 ```
-KhannRematch
+MioShield
     ├ MioShield.csproj
     └ Directory.Build.targets
 ```
