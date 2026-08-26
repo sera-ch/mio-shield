@@ -6,6 +6,7 @@ A mod for the game Hollow Knight: Silksong that grants the player a shield like 
 ## 🛠 Features
 
 - When the player takes a hit, the shield is sacrificed to prevent damage.
+- If the player's Fractured Mask would break from damage when the shield is on, it will be prevented.
 - The shield will recover after 5 seconds or if the player sits at a bench.
 - The shield will also prevent consecutive damage (Driznit drills, Muckroach pounces etc).
 
