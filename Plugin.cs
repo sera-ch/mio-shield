@@ -15,8 +15,8 @@ public class Plugin : BaseUnityPlugin
     private void Awake()
     {
         Instance = this;
-        Log = base.Logger;
-        GameObject engineContainer = new GameObject("LE_RematchManagerObject");
+        Log = Logger;
+        GameObject engineContainer = new GameObject("MS_MioShieldManagerObject");
         DontDestroyOnLoad(engineContainer);
         engineContainer.AddComponent<MioShieldBehavior>();
         MainPatches.PatchAll();
