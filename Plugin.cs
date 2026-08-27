@@ -1,7 +1,5 @@
-﻿using System;
-using BepInEx;
+﻿using BepInEx;
 using BepInEx.Logging;
-using HarmonyLib;
 using MioShield.Behaviors;
 using MioShield.Patches;
 using UnityEngine;

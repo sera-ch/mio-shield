@@ -16,7 +16,7 @@ public class ShieldPatches
         Plugin.Log.LogInfo("Player is taking damage while shielded - negating damage...");
         __instance.health += amount;
         PreventFracturedMaskBreak();
-        MioShieldBehavior.IsShielded = false;
+        MioShieldBehavior.BreakShield();
         MioShieldBehavior.Instance.StartCoroutine(MioShieldBehavior.RecoverShield(5f));
         MioShieldBehavior.Instance.StartCoroutine(MioShieldBehavior.BlockSecondHit(0.5f));
     }
@@ -28,9 +28,13 @@ public class ShieldPatches
         ResetShield();
     }
 
-    [HarmonyPatch(typeof(HeroController), nameof(HeroController.SetBenchRespawn))]
+    [HarmonyPatch(typeof(PlayerData), nameof(PlayerData.SetBenchRespawn), typeof(string), typeof(string), typeof(int), typeof(bool))]
     [HarmonyPostfix]
-    public static void SetBenchRespawnPostfix(HeroController __instance, RespawnMarker spawnMarker, string sceneName, int spawnType)
+    public static void SetBenchRespawnPostfix(PlayerData __instance, 
+        string spawnMarker,
+        string sceneName,
+        int spawnType,
+        bool facingRight)
     {
         ResetShield();
     }
@@ -38,8 +42,7 @@ public class ShieldPatches
     private static void ResetShield()
     {
         Plugin.Log.LogInfo("Player is respawning or resting at a bench, resetting shield");
-        MioShieldBehavior.IsShielded = true;
-        MioShieldBehavior.IsSecondHitShielded = false;
+        MioShieldBehavior.ResetShield();
     }
 
     private static void PreventFracturedMaskBreak()
