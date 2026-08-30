@@ -1,6 +1,12 @@
+using System;
 using System.Collections;
+using System.IO;
+using System.Text.Json;
+using BepInEx;
 using GlobalSettings;
 using MioShield.Common;
+using MioShield.Config;
+using MioShield.Util;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -13,12 +19,35 @@ public class MioShieldBehavior : MonoBehaviour
     
     public static bool IsShielded { get; private set; }
     public static bool IsSecondHitShielded { get; private set; }
+    private static float RegenerationTime;
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
         IsShielded = true;
         IsSecondHitShielded = false;
+        LoadConfig();
+    }
+
+    private static void LoadConfig()
+    {
+        try
+        {
+            string configFolder = Path.Combine(Paths.PluginPath, "Config");
+            ConfigData configData = FileUtil.ReadConfigFromFile(configFolder, "config.json");
+            RegenerationTime = configData.regenerationTime;
+            Plugin.Log.LogInfo("[MioShield] Config successfully loaded. RegenerationTime: " + RegenerationTime);
+        }
+        catch (Exception e)
+        {
+            Plugin.Log.LogError("Failed to load config: " + e.Message);
+            RegenerationTime = CommonConstants.SHIELD_RECOVERY_PERIOD;
+        }
     }
 
     public static IEnumerator RecoverShield(float delay)
@@ -49,7 +78,7 @@ public class MioShieldBehavior : MonoBehaviour
     public static void BreakShield()
     {
         IsShielded = false;
-        Instance.StartCoroutine(RecoverShield(CommonConstants.SHIELD_RECOVERY_PERIOD));
+        Instance.StartCoroutine(RecoverShield(RegenerationTime));
         Instance.StartCoroutine(BlockSecondHit(CommonConstants.SHIELD_DOUBLE_HIT_IMMUNITY_PERIOD));
         PreventFracturedMaskBreak();
     }

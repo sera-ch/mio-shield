@@ -36,6 +36,9 @@
         <Reference Include="UnityEngine.Physics2DModule">
             <HintPath>$(SILKSONG_PATH)/Hollow Knight Silksong_Data/Managed/UnityEngine.Physics2DModule.dll</HintPath>
         </Reference>
+        <Reference Include="UnityEngine.Physics2DModule">
+            <HintPath>$(SILKSONG_PATH)/Hollow Knight Silksong_Data/Managed/UnityEngine.JSONSerializeModule.dll</HintPath>
+        </Reference>
         <Reference Include="UnityEngine.InputLegacyModule">
             <HintPath>$(SILKSONG_PATH)/Hollow Knight Silksong_Data/Managed/UnityEngine.InputLegacyModule.dll</HintPath>
         </Reference>
@@ -105,5 +108,9 @@
         <Reference Include="zlib.net">
             <HintPath>$(SILKSONG_PATH)/Hollow Knight Silksong_Data/Managed/zlib.net.dll</HintPath>
         </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Text.Json" Version="10.0.11" />
     </ItemGroup>
 </Project>
