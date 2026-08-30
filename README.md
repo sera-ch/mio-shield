@@ -39,7 +39,9 @@ MioShield
 Hollow Knight Silksong
 ├ Hollow Knight Silksong_Data
 └ BepInEx
-    └ plugins
-        └ MioShield.dll
+     └ plugins
+          ├ MioShield.dll
+          └ Config
+              └ config.json
 ```
 - Launch the game
